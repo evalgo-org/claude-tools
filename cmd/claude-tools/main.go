@@ -11,6 +11,7 @@ import (
 	"github.com/evalgo-org/claude-tools/pkg/head"
 	"github.com/evalgo-org/claude-tools/pkg/jq"
 	"github.com/evalgo-org/claude-tools/pkg/ls"
+	"github.com/evalgo-org/claude-tools/pkg/sed"
 	"github.com/evalgo-org/claude-tools/pkg/sort"
 	"github.com/evalgo-org/claude-tools/pkg/tail"
 	"github.com/evalgo-org/claude-tools/pkg/tree"
@@ -43,6 +44,7 @@ Built in Go for consistent behavior across Windows, Linux, and macOS.`,
 	// Add subcommands - Phase 3
 	rootCmd.AddCommand(tree.Command())
 	rootCmd.AddCommand(jq.Command())
+	rootCmd.AddCommand(sed.Command())
 
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
