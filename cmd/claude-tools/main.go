@@ -9,6 +9,7 @@ import (
 	"github.com/evalgo-org/claude-tools/pkg/find"
 	"github.com/evalgo-org/claude-tools/pkg/grep"
 	"github.com/evalgo-org/claude-tools/pkg/head"
+	"github.com/evalgo-org/claude-tools/pkg/jq"
 	"github.com/evalgo-org/claude-tools/pkg/ls"
 	"github.com/evalgo-org/claude-tools/pkg/sort"
 	"github.com/evalgo-org/claude-tools/pkg/tail"
@@ -41,6 +42,7 @@ Built in Go for consistent behavior across Windows, Linux, and macOS.`,
 
 	// Add subcommands - Phase 3
 	rootCmd.AddCommand(tree.Command())
+	rootCmd.AddCommand(jq.Command())
 
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
