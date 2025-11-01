@@ -1,0 +1,147 @@
+{
+  "$schema": "https://claude.ai/schemas/project-v1.json",
+  "version": "1.0",
+  "project": {
+    "id": "claude-tools",
+    "name": "Claude Tools",
+    "type": "go",
+    "description": "Cross-platform CLI tools for development, built in Go for consistent behavior across Windows, Linux, and macOS",
+    "version": "0.2.0",
+    "language": "go",
+    "repository": "https://github.com/evalgo-org/claude-tools",
+    "license": "MIT"
+  },
+  "paths": {
+    "root": "/home/opunix/claude-tools",
+    "database": "/home/opunix/claude-tools/claude-memory/project_metadata.db",
+    "config": "/home/opunix/claude-tools/claude-memory/.dbconfig"
+  },
+  "structure": {
+    "entry_points": [
+      "cmd/claude-tools/main.go"
+    ],
+    "packages": [
+      "pkg/grep",
+      "pkg/find",
+      "pkg/cat",
+      "pkg/head",
+      "pkg/tail",
+      "pkg/wc",
+      "pkg/ls",
+      "pkg/sort",
+      "pkg/uniq"
+    ],
+    "key_files": {
+      "readme": "README.md",
+      "license": "LICENSE",
+      "go_mod": "go.mod",
+      "go_sum": "go.sum",
+      "ci": ".github/workflows/tests.yml"
+    }
+  },
+  "dependencies": {
+    "runtime": {
+      "eve.evalgo.org": "v0.0.13",
+      "github.com/spf13/cobra": "v1.10.1"
+    },
+    "dev": {
+      "github.com/golangci/golangci-lint": "latest"
+    }
+  },
+  "commands": {
+    "build": "go build -o claude-tools cmd/claude-tools/main.go",
+    "test": "go test -v ./...",
+    "test-race": "go test -race ./...",
+    "test-coverage": "go test -coverprofile=coverage.out ./... && go tool cover -html=coverage.out",
+    "lint": "golangci-lint run",
+    "lint-fix": "golangci-lint run --fix",
+    "install": "go install github.com/evalgo-org/claude-tools/cmd/claude-tools@latest",
+    "build-all": "GOOS=linux GOARCH=amd64 go build -o claude-tools-linux-amd64 cmd/claude-tools/main.go && GOOS=darwin GOARCH=amd64 go build -o claude-tools-darwin-amd64 cmd/claude-tools/main.go && GOOS=windows GOARCH=amd64 go build -o claude-tools-windows-amd64.exe cmd/claude-tools/main.go"
+  },
+  "tools": [
+    {
+      "name": "grep",
+      "type": "text-processing",
+      "status": "available",
+      "version": "0.1.0",
+      "description": "Pattern searching in files with regex support",
+      "file": "pkg/grep/grep.go"
+    },
+    {
+      "name": "find",
+      "type": "file-search",
+      "status": "available",
+      "version": "0.1.0",
+      "description": "Find files by name, type, or criteria",
+      "file": "pkg/find/find.go"
+    },
+    {
+      "name": "cat",
+      "type": "file-display",
+      "status": "available",
+      "version": "0.1.0",
+      "description": "Concatenate and display file contents",
+      "file": "pkg/cat/cat.go"
+    },
+    {
+      "name": "head",
+      "type": "file-display",
+      "status": "available",
+      "version": "0.2.0",
+      "description": "Display first lines/bytes of files",
+      "file": "pkg/head/head.go"
+    },
+    {
+      "name": "tail",
+      "type": "file-display",
+      "status": "available",
+      "version": "0.2.0",
+      "description": "Display last lines/bytes of files with circular buffer",
+      "file": "pkg/tail/tail.go"
+    },
+    {
+      "name": "wc",
+      "type": "text-processing",
+      "status": "available",
+      "version": "0.2.0",
+      "description": "Count lines, words, bytes, characters, max line length",
+      "file": "pkg/wc/wc.go"
+    },
+    {
+      "name": "ls",
+      "type": "file-search",
+      "status": "available",
+      "version": "0.2.0",
+      "description": "List directory contents with formatting and sorting",
+      "file": "pkg/ls/ls.go"
+    },
+    {
+      "name": "sort",
+      "type": "text-processing",
+      "status": "available",
+      "version": "0.2.0",
+      "description": "Sort lines with numeric, field, and case-insensitive modes",
+      "file": "pkg/sort/sort.go"
+    },
+    {
+      "name": "uniq",
+      "type": "text-processing",
+      "status": "available",
+      "version": "0.2.0",
+      "description": "Filter duplicate lines with counting and filtering",
+      "file": "pkg/uniq/uniq.go"
+    }
+  ],
+  "stats": {
+    "total_tools": 9,
+    "total_files": 18,
+    "total_loc": 2100,
+    "test_coverage": 85.5,
+    "last_analyzed": "2025-11-01T13:23:00Z"
+  },
+  "ci": {
+    "provider": "github-actions",
+    "config": ".github/workflows/tests.yml",
+    "platforms": ["linux", "macos", "windows"]
+  }
+}
