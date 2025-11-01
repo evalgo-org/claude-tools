@@ -12,11 +12,11 @@ import (
 
 // Options holds find configuration
 type Options struct {
-	Name      string
-	IName     string
-	Type      string
-	MaxDepth  int
-	MinDepth  int
+	Name     string
+	IName    string
+	Type     string
+	MaxDepth int
+	MinDepth int
 }
 
 // Command returns the find command

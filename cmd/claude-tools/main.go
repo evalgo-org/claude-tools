@@ -3,6 +3,8 @@ package main
 import (
 	"os"
 
+	"github.com/spf13/cobra"
+
 	"github.com/evalgo-org/claude-tools/pkg/cat"
 	"github.com/evalgo-org/claude-tools/pkg/find"
 	"github.com/evalgo-org/claude-tools/pkg/grep"
@@ -12,7 +14,6 @@ import (
 	"github.com/evalgo-org/claude-tools/pkg/tail"
 	"github.com/evalgo-org/claude-tools/pkg/uniq"
 	"github.com/evalgo-org/claude-tools/pkg/wc"
-	"github.com/spf13/cobra"
 )
 
 func main() {
