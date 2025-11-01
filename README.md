@@ -413,11 +413,13 @@ golangci-lint run --fix
 - [x] find - File finding
 - [x] cat - File display
 
-### Phase 2: File Utilities (v0.2.0)
-- [ ] ls - Directory listing
-- [ ] head - Display first lines
-- [ ] tail - Display last lines
-- [ ] wc - Word/line counting
+### Phase 2: File Utilities (v0.2.0) ✅
+- [x] head - Display first lines
+- [x] tail - Display last lines
+- [x] wc - Word/line counting
+- [x] ls - Directory listing
+- [x] sort - Sort lines
+- [x] uniq - Filter duplicate lines
 
 ### Phase 3: Advanced Tools (v0.3.0)
 - [ ] tree - Directory tree display
@@ -461,6 +463,6 @@ MIT License - see [LICENSE](LICENSE) file for details
 
 ---
 
-**Version**: 0.1.0
+**Version**: 0.2.0
 **Status**: Production Ready
 **Maintained by**: evalgo.org

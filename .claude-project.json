@@ -1,6 +1,14 @@
 {
   "$schema": "https://claude.ai/schemas/project-v1.json",
   "version": "1.0",
+  "database": {
+    "type": "timescaledb",
+    "host": "localhost",
+    "port": 5433,
+    "name": "claude_metrics",
+    "location": "/home/opunix/claude-memory/",
+    "query_helper": "/home/opunix/claude-memory/query-project.sh"
+  },
   "project": {
     "id": "claude-tools",
     "name": "Claude Tools",
@@ -13,39 +21,12 @@
   },
   "paths": {
     "root": "/home/opunix/claude-tools",
-    "database": "/home/opunix/claude-tools/claude-memory/project_metadata.db",
-    "config": "/home/opunix/claude-tools/claude-memory/.dbconfig"
-  },
-  "structure": {
-    "entry_points": [
-      "cmd/claude-tools/main.go"
-    ],
-    "packages": [
-      "pkg/grep",
-      "pkg/find",
-      "pkg/cat",
-      "pkg/head",
-      "pkg/tail",
-      "pkg/wc",
-      "pkg/ls",
-      "pkg/sort",
-      "pkg/uniq"
-    ],
-    "key_files": {
-      "readme": "README.md",
-      "license": "LICENSE",
-      "go_mod": "go.mod",
-      "go_sum": "go.sum",
-      "ci": ".github/workflows/tests.yml"
-    }
+    "entry_points": ["cmd/claude-tools/main.go"]
   },
   "dependencies": {
     "runtime": {
       "eve.evalgo.org": "v0.0.13",
       "github.com/spf13/cobra": "v1.10.1"
-    },
-    "dev": {
-      "github.com/golangci/golangci-lint": "latest"
     }
   },
   "commands": {
@@ -64,84 +45,79 @@
       "type": "text-processing",
       "status": "available",
       "version": "0.1.0",
-      "description": "Pattern searching in files with regex support",
-      "file": "pkg/grep/grep.go"
+      "file": "pkg/grep/grep.go",
+      "description": "Pattern searching in files with regex support"
     },
     {
       "name": "find",
       "type": "file-search",
       "status": "available",
       "version": "0.1.0",
-      "description": "Find files by name, type, or criteria",
-      "file": "pkg/find/find.go"
+      "file": "pkg/find/find.go",
+      "description": "Find files by name, type, or criteria"
     },
     {
       "name": "cat",
       "type": "file-display",
       "status": "available",
       "version": "0.1.0",
-      "description": "Concatenate and display file contents",
-      "file": "pkg/cat/cat.go"
+      "file": "pkg/cat/cat.go",
+      "description": "Concatenate and display file contents"
     },
     {
       "name": "head",
       "type": "file-display",
       "status": "available",
       "version": "0.2.0",
-      "description": "Display first lines/bytes of files",
-      "file": "pkg/head/head.go"
+      "file": "pkg/head/head.go",
+      "description": "Display first lines/bytes of files"
     },
     {
       "name": "tail",
       "type": "file-display",
       "status": "available",
       "version": "0.2.0",
-      "description": "Display last lines/bytes of files with circular buffer",
-      "file": "pkg/tail/tail.go"
+      "file": "pkg/tail/tail.go",
+      "description": "Display last lines/bytes of files with circular buffer"
     },
     {
       "name": "wc",
       "type": "text-processing",
       "status": "available",
       "version": "0.2.0",
-      "description": "Count lines, words, bytes, characters, max line length",
-      "file": "pkg/wc/wc.go"
+      "file": "pkg/wc/wc.go",
+      "description": "Count lines, words, bytes, characters, max line length"
     },
     {
       "name": "ls",
       "type": "file-search",
       "status": "available",
       "version": "0.2.0",
-      "description": "List directory contents with formatting and sorting",
-      "file": "pkg/ls/ls.go"
+      "file": "pkg/ls/ls.go",
+      "description": "List directory contents with formatting and sorting"
     },
     {
       "name": "sort",
       "type": "text-processing",
       "status": "available",
       "version": "0.2.0",
-      "description": "Sort lines with numeric, field, and case-insensitive modes",
-      "file": "pkg/sort/sort.go"
+      "file": "pkg/sort/sort.go",
+      "description": "Sort lines with numeric, field, and case-insensitive modes"
     },
     {
       "name": "uniq",
       "type": "text-processing",
       "status": "available",
       "version": "0.2.0",
-      "description": "Filter duplicate lines with counting and filtering",
-      "file": "pkg/uniq/uniq.go"
+      "file": "pkg/uniq/uniq.go",
+      "description": "Filter duplicate lines with counting and filtering"
     }
   ],
-  "stats": {
-    "total_tools": 9,
-    "total_files": 18,
-    "total_loc": 2100,
-    "test_coverage": 85.5,
-    "last_analyzed": "2025-11-01T13:23:00Z"
-  },
   "ci": {
     "provider": "github-actions",
     "config": ".github/workflows/tests.yml",
-    "platforms": ["linux", "macos", "windows"]
-  }
+    "golangci_lint_action": "v8",
+    "go_version": "1.25.x"
+  },
+  "note": "All metadata stored in TimescaleDB. Query with: /home/opunix/claude-memory/query-project.sh"
 }
