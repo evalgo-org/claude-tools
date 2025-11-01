@@ -16,8 +16,6 @@ linters:
     - staticcheck
     - unused
     - ineffassign
-    - gofmt
-    - goimports
   exclusions:
     paths:
       - vendor
