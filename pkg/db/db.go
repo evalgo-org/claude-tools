@@ -8,8 +8,8 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/spf13/cobra"
 	_ "github.com/lib/pq"
+	"github.com/spf13/cobra"
 )
 
 // DBConfig represents database configuration from .claude-project.json
