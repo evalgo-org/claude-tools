@@ -2,6 +2,8 @@
 # Stored in memory database: /home/opunix/claude-memory/project_metadata.db
 # Query: SELECT * FROM ci_config WHERE project_id='claude-tools' AND config_name='golangci-lint';
 
+version: "2"
+
 run:
   timeout: 5m
   tests: true
