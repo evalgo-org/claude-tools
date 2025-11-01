@@ -1,57 +1,38 @@
 # golangci-lint configuration for claude-tools
+# Based on working graphium config: /home/opunix/graphium/.golangci.yml
 # Stored in memory database: /home/opunix/claude-memory/project_metadata.db
-# Query: SELECT * FROM ci_config WHERE project_id='claude-tools' AND config_name='golangci-lint';
 
 version: "2"
 
 run:
   timeout: 5m
   tests: true
-  modules-download-mode: readonly
-  allow-parallel-runners: true
 
 linters:
-  enable:
+  disable:
     - errcheck
+    - govet
+  enable:
+    - staticcheck
     - unused
     - ineffassign
-    - staticcheck
-    - govet
     - gofmt
     - goimports
+  exclusions:
+    paths:
+      - vendor
+    rules:
+      - path: _test\.go
+        linters:
+          - errcheck
 
-linters-settings:
-  errcheck:
-    check-blank: false
-    check-type-assertions: false
-  staticcheck:
-    checks: ["all"]
-
-issues:
-  exclude-files:
-    - ".*\\.pb\\.go$"
-  exclude-dirs:
-    - vendor
-  exclude-rules:
-    # Exclude some linters from running on tests files.
-    - path: _test\\.go
-      linters:
-        - errcheck
-    # Allow embedding without using all methods
-    - linters:
-        - unused
-      text: "is unused"
-      source: "embed"
-    # Exclude all vendor/module dependency errors
-    - path: "go/pkg/mod"
-      linters:
-        - errcheck
-        - unused
-        - ineffassign
-        - staticcheck
-        - govet
-        - gofmt
-        - goimports
-  max-issues-per-linter: 0
-  max-same-issues: 0
-  uniq-by-line: false
+formatters:
+  enable:
+    - gofmt
+    - goimports
+  settings:
+    gofmt:
+      simplify: true
+    goimports:
+      local-prefixes:
+        - github.com/evalgo-org/claude-tools
