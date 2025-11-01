@@ -4,6 +4,7 @@ go 1.25.3
 
 require (
 	eve.evalgo.org v0.0.13
+	github.com/lib/pq v1.10.9
 	github.com/spf13/cobra v1.10.1
 )
 

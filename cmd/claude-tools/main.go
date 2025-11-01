@@ -7,6 +7,7 @@ import (
 
 	"github.com/evalgo-org/claude-tools/pkg/awk"
 	"github.com/evalgo-org/claude-tools/pkg/cat"
+	"github.com/evalgo-org/claude-tools/pkg/db"
 	"github.com/evalgo-org/claude-tools/pkg/find"
 	"github.com/evalgo-org/claude-tools/pkg/grep"
 	"github.com/evalgo-org/claude-tools/pkg/head"
@@ -47,6 +48,9 @@ Built in Go for consistent behavior across Windows, Linux, and macOS.`,
 	rootCmd.AddCommand(jq.Command())
 	rootCmd.AddCommand(sed.Command())
 	rootCmd.AddCommand(awk.Command())
+
+	// Add subcommands - Phase 4
+	rootCmd.AddCommand(db.Command())
 
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
