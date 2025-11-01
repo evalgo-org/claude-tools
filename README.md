@@ -421,11 +421,11 @@ golangci-lint run --fix
 - [x] sort - Sort lines
 - [x] uniq - Filter duplicate lines
 
-### Phase 3: Advanced Tools (v0.3.0)
-- [ ] tree - Directory tree display
-- [ ] jq - JSON processing
-- [ ] sed - Stream editing
-- [ ] awk - Text processing
+### Phase 3: Advanced Tools (v0.3.0) ✅
+- [x] tree - Directory tree display
+- [x] jq - JSON processing
+- [x] sed - Stream editing
+- [x] awk - Text processing
 
 ## Contributing
 
@@ -463,6 +463,6 @@ MIT License - see [LICENSE](LICENSE) file for details
 
 ---
 
-**Version**: 0.2.0
+**Version**: 0.3.0
 **Status**: Production Ready
 **Maintained by**: evalgo.org

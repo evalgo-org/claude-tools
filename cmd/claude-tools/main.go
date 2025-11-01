@@ -5,6 +5,7 @@ import (
 
 	"github.com/spf13/cobra"
 
+	"github.com/evalgo-org/claude-tools/pkg/awk"
 	"github.com/evalgo-org/claude-tools/pkg/cat"
 	"github.com/evalgo-org/claude-tools/pkg/find"
 	"github.com/evalgo-org/claude-tools/pkg/grep"
@@ -25,7 +26,7 @@ func main() {
 		Short: "Cross-platform CLI tools for development",
 		Long: `claude-tools provides cross-platform implementations of common Linux/Unix tools.
 Built in Go for consistent behavior across Windows, Linux, and macOS.`,
-		Version: "0.2.0",
+		Version: "0.3.0",
 	}
 
 	// Add subcommands - Phase 1
@@ -45,6 +46,7 @@ Built in Go for consistent behavior across Windows, Linux, and macOS.`,
 	rootCmd.AddCommand(tree.Command())
 	rootCmd.AddCommand(jq.Command())
 	rootCmd.AddCommand(sed.Command())
+	rootCmd.AddCommand(awk.Command())
 
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
