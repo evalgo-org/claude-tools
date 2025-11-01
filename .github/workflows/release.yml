@@ -1,0 +1,159 @@
+name: Release Binaries
+
+on:
+  push:
+    tags:
+      - 'v*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version tag (e.g., v0.3.0)'
+        required: true
+
+jobs:
+  build-and-release:
+    name: Build and Release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    strategy:
+      matrix:
+        include:
+          - goos: linux
+            goarch: amd64
+            output: claude-tools-linux-amd64
+          - goos: linux
+            goarch: arm64
+            output: claude-tools-linux-arm64
+          - goos: darwin
+            goarch: amd64
+            output: claude-tools-darwin-amd64
+          - goos: darwin
+            goarch: arm64
+            output: claude-tools-darwin-arm64
+          - goos: windows
+            goarch: amd64
+            output: claude-tools-windows-amd64.exe
+          - goos: windows
+            goarch: arm64
+            output: claude-tools-windows-arm64.exe
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.25'
+
+      - name: Build binary
+        env:
+          GOOS: ${{ matrix.goos }}
+          GOARCH: ${{ matrix.goarch }}
+          CGO_ENABLED: 0
+        run: |
+          go build -ldflags="-s -w" -o ${{ matrix.output }} cmd/claude-tools/main.go
+          chmod +x ${{ matrix.output }} || true
+
+      - name: Create checksums
+        run: |
+          sha256sum ${{ matrix.output }} > ${{ matrix.output }}.sha256
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.output }}
+          path: |
+            ${{ matrix.output }}
+            ${{ matrix.output }}.sha256
+
+  create-release:
+    name: Create Release
+    needs: build-and-release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download all artifacts
+        uses: actions/download-artifact@v4
+        with:
+          path: ./binaries
+
+      - name: Prepare release files
+        run: |
+          mkdir -p release
+          find ./binaries -type f -exec cp {} release/ \;
+          ls -lah release/
+
+      - name: Get version
+        id: get_version
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "version=${{ github.event.inputs.version }}" >> $GITHUB_OUTPUT
+          else
+            echo "version=${GITHUB_REF#refs/tags/}" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          tag_name: ${{ steps.get_version.outputs.version }}
+          name: Claude Tools ${{ steps.get_version.outputs.version }}
+          draft: false
+          prerelease: false
+          generate_release_notes: true
+          files: release/*
+          body: |
+            ## Claude Tools ${{ steps.get_version.outputs.version }}
+
+            Cross-platform CLI tools for development, built in Go.
+
+            ### Download
+
+            Choose the binary for your platform:
+
+            **Linux**:
+            - `claude-tools-linux-amd64` (x86_64)
+            - `claude-tools-linux-arm64` (ARM64)
+
+            **macOS**:
+            - `claude-tools-darwin-amd64` (Intel)
+            - `claude-tools-darwin-arm64` (Apple Silicon)
+
+            **Windows**:
+            - `claude-tools-windows-amd64.exe` (x64)
+            - `claude-tools-windows-arm64.exe` (ARM64)
+
+            ### Installation
+
+            ```bash
+            # Linux/macOS - download and make executable
+            curl -LO https://github.com/evalgo-org/claude-tools/releases/download/${{ steps.get_version.outputs.version }}/claude-tools-linux-amd64
+            chmod +x claude-tools-linux-amd64
+            sudo mv claude-tools-linux-amd64 /usr/local/bin/claude-tools
+
+            # Verify checksum
+            curl -LO https://github.com/evalgo-org/claude-tools/releases/download/${{ steps.get_version.outputs.version }}/claude-tools-linux-amd64.sha256
+            sha256sum -c claude-tools-linux-amd64.sha256
+            ```
+
+            ### Verify Installation
+
+            ```bash
+            claude-tools --version
+            claude-tools --help
+            ```
+
+            ### What's Included
+
+            All 13 tools in a single binary:
+            - grep, find, cat, head, tail, wc, ls, sort, uniq
+            - tree, jq, sed, awk
+
+            Full changelog: https://github.com/evalgo-org/claude-tools/compare/v0.2.0...${{ steps.get_version.outputs.version }}
