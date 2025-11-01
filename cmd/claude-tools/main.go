@@ -27,7 +27,7 @@ func main() {
 		Short: "Cross-platform CLI tools for development",
 		Long: `claude-tools provides cross-platform implementations of common Linux/Unix tools.
 Built in Go for consistent behavior across Windows, Linux, and macOS.`,
-		Version: "0.3.0",
+		Version: "0.4.0",
 	}
 
 	// Add subcommands - Phase 1
