@@ -1,0 +1,51 @@
+run:
+  timeout: 5m
+  tests: true
+  modules-download-mode: readonly
+  allow-parallel-runners: true
+
+linters:
+  enable:
+    - errcheck
+    - unused
+    - ineffassign
+    - staticcheck
+    - govet
+    - gofmt
+    - goimports
+
+linters-settings:
+  errcheck:
+    check-blank: false
+    check-type-assertions: false
+  staticcheck:
+    checks: ["all"]
+
+issues:
+  exclude-files:
+    - ".*\\.pb\\.go$"
+  exclude-dirs:
+    - vendor
+  exclude-rules:
+    # Exclude some linters from running on tests files.
+    - path: _test\\.go
+      linters:
+        - errcheck
+    # Allow embedding without using all methods
+    - linters:
+        - unused
+      text: "is unused"
+      source: "embed"
+    # Exclude all vendor/module dependency errors
+    - path: "go/pkg/mod"
+      linters:
+        - errcheck
+        - unused
+        - ineffassign
+        - staticcheck
+        - govet
+        - gofmt
+        - goimports
+  max-issues-per-linter: 0
+  max-same-issues: 0
+  uniq-by-line: false
