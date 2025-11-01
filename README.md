@@ -122,6 +122,178 @@ claude-tools cat -s file.txt
 - `-A, --show-all`: Show non-printing characters
 - `-s, --squeeze-blank`: Squeeze multiple blank lines
 
+### head - Output First Lines
+
+Display the first part of files.
+
+```bash
+# Show first 10 lines (default)
+claude-tools head file.txt
+
+# Show first 20 lines
+claude-tools head -n 20 file.log
+
+# Show first 100 bytes
+claude-tools head -c 100 file.bin
+
+# Limit grep results
+claude-tools grep -r "error" . | claude-tools head -n 10
+```
+
+**Flags:**
+- `-n, --lines NUM`: Print the first NUM lines (default: 10)
+- `-c, --bytes NUM`: Print the first NUM bytes
+- `-q, --quiet`: Never print headers giving file names
+
+### tail - Output Last Lines
+
+Display the last part of files.
+
+```bash
+# Show last 10 lines (default)
+claude-tools tail file.txt
+
+# Show last 50 lines
+claude-tools tail -n 50 app.log
+
+# Show last 1KB
+claude-tools tail -c 1024 data.bin
+```
+
+**Flags:**
+- `-n, --lines NUM`: Output the last NUM lines (default: 10)
+- `-c, --bytes NUM`: Output the last NUM bytes
+- `-q, --quiet`: Never print headers giving file names
+
+### wc - Count Lines, Words, Bytes
+
+Print newline, word, and byte counts.
+
+```bash
+# Count everything (lines, words, bytes)
+claude-tools wc file.txt
+
+# Count only lines
+claude-tools wc -l file.txt
+
+# Count files found
+claude-tools find . --name "*.go" | claude-tools wc -l
+
+# Count characters
+claude-tools wc -m file.txt
+
+# Maximum line length
+claude-tools wc -L file.txt
+```
+
+**Flags:**
+- `-l, --lines`: Print the newline counts
+- `-w, --words`: Print the word counts
+- `-c, --bytes`: Print the byte counts
+- `-m, --chars`: Print the character counts
+- `-L, --max-line-length`: Print the maximum display width
+
+### ls - List Directory Contents
+
+List information about files and directories.
+
+```bash
+# List current directory
+claude-tools ls
+
+# Long format
+claude-tools ls -l
+
+# Show all files including hidden
+claude-tools ls -a
+
+# Human-readable sizes
+claude-tools ls -l --human-readable
+
+# Sort by time, newest first
+claude-tools ls -lt
+
+# Sort by size, largest first
+claude-tools ls -lS
+
+# Recursive listing
+claude-tools ls -R
+```
+
+**Flags:**
+- `-l, --long`: Use a long listing format
+- `-a, --all`: Do not ignore entries starting with .
+- `--human-readable`: Print sizes in human readable format (with -l)
+- `-R, --recursive`: List subdirectories recursively
+- `-t, --time`: Sort by modification time, newest first
+- `-S, --size`: Sort by file size, largest first
+- `-r, --reverse`: Reverse order while sorting
+
+### sort - Sort Lines
+
+Sort lines of text files.
+
+```bash
+# Sort alphabetically
+claude-tools sort file.txt
+
+# Sort numerically
+claude-tools sort -n numbers.txt
+
+# Sort in reverse
+claude-tools sort -r file.txt
+
+# Sort numerically, reverse
+claude-tools sort -nr file.txt
+
+# Remove duplicates
+claude-tools sort -u file.txt
+
+# Case-insensitive sort
+claude-tools sort -f file.txt
+
+# Sort by field
+claude-tools sort -k 2 data.txt
+```
+
+**Flags:**
+- `-r, --reverse`: Reverse the result of comparisons
+- `-n, --numeric-sort`: Compare according to string numerical value
+- `-u, --unique`: Output only the first of an equal run
+- `-f, --ignore-case`: Fold lower case to upper case characters
+- `-k, --key NUM`: Sort via a key; 1-indexed field number
+- `-t, --field-separator SEP`: Use SEP instead of space
+
+### uniq - Filter Duplicate Lines
+
+Report or omit repeated lines.
+
+```bash
+# Remove duplicate lines
+claude-tools uniq file.txt
+
+# Count occurrences
+claude-tools uniq -c file.txt
+
+# Show only duplicated lines
+claude-tools uniq -d file.txt
+
+# Show only unique lines
+claude-tools uniq -u file.txt
+
+# Case-insensitive
+claude-tools uniq -i file.txt
+
+# Frequency analysis
+claude-tools sort file.txt | claude-tools uniq -c | claude-tools sort -rn
+```
+
+**Flags:**
+- `-c, --count`: Prefix lines by the number of occurrences
+- `-d, --repeated`: Only print duplicate lines, one for each group
+- `-u, --unique`: Only print unique lines
+- `-i, --ignore-case`: Ignore differences in case when comparing
+
 ## Usage Examples
 
 ### Code Analysis
