@@ -7,6 +7,7 @@ import (
 
 	"github.com/evalgo-org/claude-tools/pkg/awk"
 	"github.com/evalgo-org/claude-tools/pkg/cat"
+	"github.com/evalgo-org/claude-tools/pkg/cp"
 	"github.com/evalgo-org/claude-tools/pkg/db"
 	"github.com/evalgo-org/claude-tools/pkg/find"
 	"github.com/evalgo-org/claude-tools/pkg/grep"
@@ -14,9 +15,12 @@ import (
 	"github.com/evalgo-org/claude-tools/pkg/jq"
 	"github.com/evalgo-org/claude-tools/pkg/ls"
 	"github.com/evalgo-org/claude-tools/pkg/mkdir"
+	"github.com/evalgo-org/claude-tools/pkg/mv"
+	"github.com/evalgo-org/claude-tools/pkg/rm"
 	"github.com/evalgo-org/claude-tools/pkg/sed"
 	"github.com/evalgo-org/claude-tools/pkg/sort"
 	"github.com/evalgo-org/claude-tools/pkg/tail"
+	"github.com/evalgo-org/claude-tools/pkg/touch"
 	"github.com/evalgo-org/claude-tools/pkg/tree"
 	"github.com/evalgo-org/claude-tools/pkg/uniq"
 	"github.com/evalgo-org/claude-tools/pkg/wc"
@@ -28,7 +32,7 @@ func main() {
 		Short: "Cross-platform CLI tools for development",
 		Long: `claude-tools provides cross-platform implementations of common Linux/Unix tools.
 Built in Go for consistent behavior across Windows, Linux, and macOS.`,
-		Version: "0.5.0",
+		Version: "0.5.1",
 	}
 
 	// Add subcommands - Phase 1
@@ -55,6 +59,12 @@ Built in Go for consistent behavior across Windows, Linux, and macOS.`,
 
 	// Add subcommands - Phase 5
 	rootCmd.AddCommand(mkdir.Command())
+
+	// Add subcommands - Phase 6 (File operations)
+	rootCmd.AddCommand(rm.Command())
+	rootCmd.AddCommand(cp.Command())
+	rootCmd.AddCommand(mv.Command())
+	rootCmd.AddCommand(touch.Command())
 
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
