@@ -12,6 +12,7 @@ import (
 	"github.com/evalgo-org/claude-tools/pkg/ls"
 	"github.com/evalgo-org/claude-tools/pkg/sort"
 	"github.com/evalgo-org/claude-tools/pkg/tail"
+	"github.com/evalgo-org/claude-tools/pkg/tree"
 	"github.com/evalgo-org/claude-tools/pkg/uniq"
 	"github.com/evalgo-org/claude-tools/pkg/wc"
 )
@@ -37,6 +38,9 @@ Built in Go for consistent behavior across Windows, Linux, and macOS.`,
 	rootCmd.AddCommand(ls.Command())
 	rootCmd.AddCommand(sort.Command())
 	rootCmd.AddCommand(uniq.Command())
+
+	// Add subcommands - Phase 3
+	rootCmd.AddCommand(tree.Command())
 
 	if err := rootCmd.Execute(); err != nil {
 		os.Exit(1)
